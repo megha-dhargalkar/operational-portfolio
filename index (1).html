@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="Megha Dhargalkar | Operational Portfolio">
+<meta property="og:description" content="An interactive look at the operational systems, tools, and frameworks I've built — live demos of QA workflows, campaign tracking, training infrastructure, and the databases that run a multi-million dollar media operation.">
+<meta property="og:image" content="https://megha-dhargalkar.github.io/operational-portfolio/thumbnail.png">
+<meta property="og:url" content="https://megha-dhargalkar.github.io/operational-portfolio/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://megha-dhargalkar.github.io/operational-portfolio/thumbnail.png">
+<title>Megha Dhargalkar | Operational Portfolio</title>
+<style>
+  :root {
+    --teal: #0F6E56;
+    --teal-light: #E8F4F0;
+    --teal-mid: #1A8A6C;
+    --terracotta: #C4622D;
+    --terra-light: #FAF0EA;
+    --navy: #1C2B3A;
+    --grey: #3D5166;
+    --light-grey: #F7F5F1;
+    --border: #E2DDD6;
+    --text-muted: #A09484;
+    --white: #FFFFFF;
+    --delivered: #0F6E56;
+    --underdelivered: #D97706;
+    --overdelivered: #C4622D;
+    --void: #94A3B8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--light-grey);
+    color: var(--navy);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--white);
+    border-top: 5px solid var(--teal);
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(15,110,86,0.07);
+  }
+
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-left { display: flex; align-items: center; gap: 20px; }
+
+  .monogram {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: rgba(15,110,86,0.12);
+    border: 2px solid var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    font-family: Georgia, serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--teal);
+  }
+
+  .header-name {
+    font-family: Georgia, serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--navy); letter-spacing: -0.3px;
+  }
+
+  .header-title {
+    font-size: 11px; color: var(--teal);
+    letter-spacing: 1.5px; text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .header-tagline {
+    font-family: Georgia, serif;
+    font-size: 12px; color: var(--text-muted);
+    font-style: italic;
+    text-align: right;
+    max-width: 360px;
+  }
+
+  /* NODE NETWORK decoration */
+  .node-net {
+    position: absolute;
+    right: 32px; top: 8px;
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  /* NAV */
+  .nav {
+    background: var(--navy);
+    padding: 0;
+  }
+
+  .nav-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    gap: 0;
+  }
+
+  .nav-btn {
+    padding: 14px 24px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+    font-family: inherit;
+  }
+
+  .nav-btn:hover { color: white; background: rgba(255,255,255,0.05); }
+  .nav-btn.active { color: var(--terracotta); border-bottom-color: var(--terracotta); }
+
+  /* MAIN */
+  .main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px;
+  }
+
+  /* SECTIONS */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* HERO SECTION */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .hero-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--teal);
+  }
+
+  .hero-card.terra::before { background: var(--terracotta); }
+
+  .hero-stat {
+    font-family: Georgia, serif;
+    font-size: 42px; font-weight: 700;
+    color: var(--teal);
+    line-height: 1;
+  }
+
+  .hero-card.terra .hero-stat { color: var(--terracotta); }
+
+  .hero-label {
+    font-size: 11px; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  .hero-sub {
+    font-size: 13px; color: var(--grey);
+    margin-top: 6px;
+  }
+
+  /* CARDS GRID */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .system-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    border-left: 4px solid var(--teal);
+    transition: box-shadow 0.2s;
+  }
+
+  .system-card:hover { box-shadow: 0 4px 16px rgba(15,110,86,0.1); }
+  .system-card.terra { border-left-color: var(--terracotta); }
+
+  .system-card-title {
+    font-size: 14px; font-weight: 700;
+    color: var(--navy); margin-bottom: 6px;
+  }
+
+  .system-card-desc {
+    font-size: 12px; color: var(--grey);
+    line-height: 1.5;
+  }
+
+  .system-card-tag {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 3px 10px;
+    background: var(--teal-light);
+    color: var(--teal);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 20px;
+  }
+
+  .system-card.terra .system-card-tag {
+    background: var(--terra-light);
+    color: var(--terracotta);
+  }
+
+  /* AI SECTION */
+  .ai-section {
+    background: var(--navy);
+    border-radius: 8px;
+    padding: 28px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .ai-badge {
+    background: rgba(196,98,45,0.15);
+    border: 1px solid var(--terracotta);
+    border-radius: 8px;
+    padding: 16px 20px;
+    text-align: center;
+  }
+
+  .ai-badge-label {
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    display: block; margin-bottom: 4px;
+  }
+
+  .ai-badge-title {
+    font-family: Georgia, serif;
+    font-size: 18px; font-weight: 700;
+    color: white;
+  }
+
+  .ai-tools {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .ai-tool {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: 14px;
+  }
+
+  .ai-tool-name {
+    font-size: 13px; font-weight: 700;
+    color: white; margin-bottom: 4px;
+  }
+
+  .ai-tool-desc {
+    font-size: 11px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.4;
+  }
+
+  /* TABLE SECTION */
+  .table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: Georgia, serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--navy);
+  }
+
+  .section-subtitle {
+    font-size: 12px; color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .filter-row {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+
+  .filter-btn {
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    background: var(--white);
+    font-size: 12px; color: var(--grey);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--teal);
+    color: white;
+    border-color: var(--teal);
+  }
+
+  .search-input {
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 12px;
+    font-family: inherit;
+    color: var(--navy);
+    background: var(--white);
+    outline: none;
+    min-width: 220px;
+  }
+
+  .search-input:focus { border-color: var(--teal); }
+
+  /* TABLE */
+  .table-wrap {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead { background: var(--navy); }
+
+  th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  th:hover { color: white; }
+
+  td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--grey);
+    white-space: nowrap;
+  }
+
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: var(--light-grey); }
+
+  .status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .status-delivered { background: #E8F4F0; color: var(--delivered); }
+  .status-underdelivered { background: #FEF3C7; color: #92400E; }
+  .status-overdelivered { background: #FAF0EA; color: var(--overdelivered); }
+  .status-void { background: #F1F5F9; color: var(--void); }
+  .status-active { background: #E8F4F0; color: var(--teal); }
+  .status-review { background: #FEF3C7; color: #92400E; }
+  .status-planning { background: #EFF6FF; color: #3B82F6; }
+  .status-risk { background: #FEE2E2; color: #DC2626; }
+  .status-confirmed { background: #E8F4F0; color: var(--teal); }
+  .status-pending { background: #FEF3C7; color: #92400E; }
+
+  .medium-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .medium-digital { background: #EFF6FF; color: #3B82F6; }
+  .medium-linear { background: #F5F3FF; color: #7C3AED; }
+  .medium-cinema { background: #FDF2F8; color: #DB2777; }
+
+  .amount-cell { font-weight: 700; color: var(--navy); font-family: monospace; }
+  .id-cell { font-family: monospace; font-size: 11px; color: var(--text-muted); }
+  .company-cell { font-weight: 600; color: var(--navy); }
+  .flag-cell { color: var(--terracotta); font-size: 11px; font-style: italic; }
+
+  /* QA SECTION */
+  .qa-demo {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+
+  .qa-header {
+    background: var(--navy);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .qa-header-title {
+    font-family: Georgia, serif;
+    font-size: 18px; font-weight: 700;
+    color: white;
+  }
+
+  .qa-header-sub { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+  .qa-body { padding: 28px; }
+
+  .qa-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .qa-field { display: flex; flex-direction: column; gap: 6px; }
+
+  .qa-label {
+    font-size: 11px; letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted); font-weight: 600;
+  }
+
+  .qa-input, .qa-select {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+    color: var(--navy);
+    background: var(--light-grey);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .qa-input:focus, .qa-select:focus { border-color: var(--teal); background: white; }
+  .qa-input.error { border-color: #DC2626; background: #FEF2F2; }
+
+  .qa-checklist { margin-bottom: 24px; }
+
+  .qa-check-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+  }
+
+  .qa-check-item:last-child { border-bottom: none; }
+
+  .qa-checkbox {
+    width: 20px; height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+
+  .qa-check-item.checked .qa-checkbox {
+    background: var(--teal);
+    border-color: var(--teal);
+  }
+
+  .qa-check-item.checked .qa-checkbox::after {
+    content: '✓';
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .qa-check-label { font-size: 13px; color: var(--grey); }
+  .qa-check-item.checked .qa-check-label { color: var(--teal); text-decoration: line-through; opacity: 0.7; }
+
+  .error-flag {
+    background: #FEF2F2;
+    border: 1px solid #FECACA;
+    border-left: 4px solid #DC2626;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: none;
+  }
+
+  .error-flag.visible { display: flex; align-items: center; gap: 12px; }
+
+  .error-flag-icon { font-size: 20px; }
+
+  .error-flag-text { font-size: 13px; color: #991B1B; font-weight: 600; }
+  .error-flag-sub { font-size: 12px; color: #DC2626; margin-top: 2px; }
+
+  .success-flag {
+    background: #ECFDF5;
+    border: 1px solid #A7F3D0;
+    border-left: 4px solid var(--teal);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: none;
+  }
+
+  .success-flag.visible { display: flex; align-items: center; gap: 12px; }
+  .success-flag-text { font-size: 13px; color: #065F46; font-weight: 600; }
+
+  .qa-submit {
+    padding: 12px 28px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.2s;
+  }
+
+  .qa-submit:hover { background: var(--teal-mid); }
+
+  .qa-reset {
+    padding: 12px 20px;
+    background: none;
+    color: var(--grey);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    font-family: inherit;
+    margin-left: 10px;
+  }
+
+  /* TRAINING SECTION */
+  .training-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .trainee-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .trainee-header {
+    background: var(--navy);
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .trainee-name {
+    font-family: Georgia, serif;
+    font-size: 18px; font-weight: 700;
+    color: white;
+  }
+
+  .trainee-role { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+  .readiness-badge {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+
+  .readiness-strong { background: #E8F4F0; color: var(--teal); }
+  .readiness-developing { background: #FEF3C7; color: #92400E; }
+  .readiness-needs-support { background: #FEE2E2; color: #DC2626; }
+
+  .trainee-body { padding: 24px; }
+
+  .dimension-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .dimension-label {
+    font-size: 12px; color: var(--grey);
+    width: 160px; flex-shrink: 0;
+  }
+
+  .dimension-bar-wrap {
+    flex: 1;
+    height: 8px;
+    background: var(--light-grey);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .dimension-bar {
+    height: 100%;
+    background: var(--teal);
+    border-radius: 4px;
+    transition: width 0.8s ease;
+  }
+
+  .trainee-card:nth-child(2) .dimension-bar { background: var(--terracotta); }
+
+  .dimension-score {
+    font-size: 12px; font-weight: 700;
+    color: var(--navy);
+    width: 30px; text-align: right;
+  }
+
+  .trainee-feedback {
+    margin-top: 16px;
+    padding: 14px;
+    background: var(--light-grey);
+    border-radius: 6px;
+    border-left: 3px solid var(--teal);
+  }
+
+  .trainee-card:nth-child(2) .trainee-feedback { border-left-color: var(--terracotta); }
+
+  .feedback-label {
+    font-size: 10px; letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .feedback-text { font-size: 12px; color: var(--grey); line-height: 1.5; }
+
+  /* HOW I WORK */
+  .how-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .how-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 32px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .how-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+
+  .how-card:nth-child(1)::before { background: var(--teal); }
+  .how-card:nth-child(2)::before { background: var(--terracotta); }
+  .how-card:nth-child(3)::before { background: var(--navy); }
+
+  .how-icon {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 24px;
+  }
+
+  .how-card:nth-child(1) .how-icon { background: var(--teal-light); }
+  .how-card:nth-child(2) .how-icon { background: var(--terra-light); }
+  .how-card:nth-child(3) .how-icon { background: #EFF6FF; }
+
+  .how-title {
+    font-family: Georgia, serif;
+    font-size: 20px; font-weight: 700;
+    color: var(--navy); margin-bottom: 12px;
+  }
+
+  .how-text {
+    font-size: 13px; color: var(--grey);
+    line-height: 1.7;
+  }
+
+  /* PHILOSOPHY */
+  .philosophy {
+    background: var(--navy);
+    border-radius: 8px;
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .philosophy-quote {
+    font-family: Georgia, serif;
+    font-size: 22px; font-weight: 700;
+    color: white;
+    max-width: 600px;
+    margin: 0 auto 12px;
+    line-height: 1.4;
+  }
+
+  .philosophy-attr {
+    font-size: 12px; color: var(--text-muted);
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  /* FOOTER */
+  .footer {
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    padding: 24px 32px;
+    margin-top: 40px;
+  }
+
+  .footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-name {
+    font-family: Georgia, serif;
+    font-size: 16px; font-weight: 700;
+    color: var(--navy);
+  }
+
+  .footer-title { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  .footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--teal);
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  .footer-bar { height: 4px; background: var(--teal); margin-top: 24px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .how-grid { grid-template-columns: 1fr; }
+    .training-grid { grid-template-columns: 1fr; }
+    .ai-tools { grid-template-columns: 1fr 1fr; }
+    .qa-form-row { grid-template-columns: 1fr; }
+    .main { padding: 16px; }
+  }
+
+  /* POST LOG GRID */
+  .postlog-table th, .postlog-table td {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+
+  .postlog-submitted {
+    background: var(--teal-light);
+    color: var(--teal);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 600;
+  }
+
+  .postlog-pending {
+    background: #FEF3C7;
+    color: #92400E;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+  }
+
+  .postlog-na {
+    color: var(--border);
+    font-size: 10px;
+  }
+
+  /* WEEKLY UPDATE */
+  .update-type {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .update-ddn { background: #EFF6FF; color: #3B82F6; }
+  .update-mco { background: #E8F4F0; color: var(--teal); }
+  .update-operational { background: #F5F3FF; color: #7C3AED; }
+  .update-finance { background: #FAF0EA; color: var(--terracotta); }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    background: var(--teal-light);
+    color: var(--teal);
+    font-weight: 600;
+  }
+
+  .disclaimer {
+    background: #FFFBEB;
+    border: 1px solid #FDE68A;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 11px;
+    color: #92400E;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="monogram">MD</div>
+      <div>
+        <div class="header-name">Megha Dhargalkar</div>
+        <div class="header-title">Media Operations &amp; Campaign Strategy Manager</div>
+      </div>
+    </div>
+    <div class="header-tagline">"Good operations are invisible. You only notice them when they're gone."</div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" onclick="showSection('overview')">Overview</button>
+    <button class="nav-btn" onclick="showSection('invoice')">Invoice Tracker</button>
+    <button class="nav-btn" onclick="showSection('orders')">Order Log</button>
+    <button class="nav-btn" onclick="showSection('postlog')">Post Log</button>
+    <button class="nav-btn" onclick="showSection('updates')">Weekly Updates</button>
+    <button class="nav-btn" onclick="showSection('qa')">QA System</button>
+    <button class="nav-btn" onclick="showSection('training')">Training</button>
+    <button class="nav-btn" onclick="showSection('howIwork')">How I Work</button>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- OVERVIEW -->
+  <div id="overview" class="section active">
+    <div class="disclaimer">
+      ⚠️ All company names, order IDs, and figures in this portfolio are fictional and created for demonstration purposes only. No real client data is represented.
+    </div>
+
+    <div class="hero">
+      <div class="hero-card">
+        <div class="hero-stat">32</div>
+        <div class="hero-label">Active Campaign Orders</div>
+        <div class="hero-sub">Across 5 portfolio companies &amp; 10 media partners</div>
+      </div>
+      <div class="hero-card terra">
+        <div class="hero-stat">20–30</div>
+        <div class="hero-label">Documents QA'd Monthly</div>
+        <div class="hero-sub">Zero unreconciled data leaves the building</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-stat">6</div>
+        <div class="hero-label">Operational Systems Built</div>
+        <div class="hero-sub">From scratch. Documented for team self-service.</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:24px;">
+      <div class="section-title">Systems Built</div>
+      <div class="section-subtitle" style="margin-bottom:16px;">Operational infrastructure designed and deployed — AI-augmented where noted</div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="system-card">
+        <div class="system-card-title">Notion Databases</div>
+        <div class="system-card-desc">Project tracking, single source of truth for campaign states, dependencies, and team task ownership across all active accounts.</div>
+        <span class="system-card-tag">Infrastructure</span>
+      </div>
+      <div class="system-card">
+        <div class="system-card-title">Microsoft Planner Systems</div>
+        <div class="system-card-desc">Task assignment and team coordination — structured by role, priority, and deadline. Built for visibility across functions.</div>
+        <span class="system-card-tag">Infrastructure</span>
+      </div>
+      <div class="system-card terra">
+        <div class="system-card-title">Excel Trackers + Auto Error Flag</div>
+        <div class="system-card-desc">Financial tracking with automated error-flagging. When a figure doesn't reconcile, an alert triggers before anything reaches a client.</div>
+        <span class="system-card-tag">AI-Augmented</span>
+      </div>
+      <div class="system-card terra">
+        <div class="system-card-title">Google Forms QA System</div>
+        <div class="system-card-desc">Structured quality checks across 20–30 documents monthly. Checklist-based with conditional logic for financial data validation.</div>
+        <span class="system-card-tag">QA System</span>
+      </div>
+      <div class="system-card">
+        <div class="system-card-title">Process Playbooks</div>
+        <div class="system-card-desc">Documentation built for team self-service. New joiners can follow end-to-end without needing step-by-step guidance.</div>
+        <span class="system-card-tag">Documentation</span>
+      </div>
+      <div class="system-card terra">
+        <div class="system-card-title">HTML Briefing Systems</div>
+        <div class="system-card-desc">Interactive HTML dashboards for leadership briefings — built with AI augmentation for consistent structure, tone, and visual formatting.</div>
+        <span class="system-card-tag">AI-Augmented</span>
+      </div>
+      <div class="system-card">
+        <div class="system-card-title">Training &amp; Evaluation Framework</div>
+        <div class="system-card-desc">Structured onboarding and upskilling program with scored evaluations across 5 dimensions, TAT tracking, and written developmental feedback.</div>
+        <span class="system-card-tag">People Development</span>
+      </div>
+      <div class="system-card terra">
+        <div class="system-card-title">Communication Frameworks</div>
+        <div class="system-card-desc">Email and stakeholder communication templates — built for consistent tone, correct escalation paths, and zero ambiguity.</div>
+        <span class="system-card-tag">Communication</span>
+      </div>
+    </div>
+
+    <div class="ai-section">
+      <div class="ai-badge">
+        <span class="ai-badge-label">Workflow Mode</span>
+        <div class="ai-badge-title">AI-Augmented</div>
+      </div>
+      <div class="ai-tools">
+        <div class="ai-tool">
+          <div class="ai-tool-name">HTML Briefing Systems</div>
+          <div class="ai-tool-desc">Leadership dashboards built and structured with AI assistance for consistency and speed</div>
+        </div>
+        <div class="ai-tool">
+          <div class="ai-tool-name">Automated Error Flagging</div>
+          <div class="ai-tool-desc">Excel-based financial validation with AI-directed conditional logic and alert routing</div>
+        </div>
+        <div class="ai-tool">
+          <div class="ai-tool-name">Workflow Documentation</div>
+          <div class="ai-tool-desc">AI-directed process playbooks, SOPs, and reference guides built for team self-service</div>
+        </div>
+        <div class="ai-tool">
+          <div class="ai-tool-name">Communication Templates</div>
+          <div class="ai-tool-desc">Prompt-engineered email frameworks for client, stakeholder, and escalation communications</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="philosophy">
+      <div class="philosophy-quote">"Good operations are invisible. You only notice them when they're gone."</div>
+      <div class="philosophy-attr">— Megha Dhargalkar</div>
+    </div>
+  </div>
+
+  <!-- INVOICE TRACKER -->
+  <div id="invoice" class="section">
+    <div class="disclaimer">⚠️ All data below is fictional and for demonstration purposes only.</div>
+    <div class="table-header">
+      <div>
+        <div class="section-title">Invoice Tracker</div>
+        <div class="section-subtitle">Campaign spend vs committed — monthly breakdown by order</div>
+      </div>
+    </div>
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterInvoice('all', this)">All</button>
+      <button class="filter-btn" onclick="filterInvoice('Delivered', this)">Delivered</button>
+      <button class="filter-btn" onclick="filterInvoice('Underdelivered', this)">Underdelivered</button>
+      <button class="filter-btn" onclick="filterInvoice('Overdelivered', this)">Overdelivered</button>
+      <input class="search-input" type="text" placeholder="Search company or partner..." oninput="searchInvoice(this.value)">
+    </div>
+    <div class="table-wrap">
+      <table id="invoiceTable">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Portfolio Co.</th>
+            <th>Media Partner</th>
+            <th>Medium</th>
+            <th>MCO Signed</th>
+            <th>Jan</th>
+            <th>Feb</th>
+            <th>Mar</th>
+            <th>Apr</th>
+            <th>Total Spend</th>
+            <th>Remaining</th>
+            <th>Status</th>
+            <th>Remarks</th>
+          </tr>
+        </thead>
+        <tbody id="invoiceBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ORDER LOG -->
+  <div id="orders" class="section">
+    <div class="disclaimer">⚠️ All data below is fictional and for demonstration purposes only.</div>
+    <div class="table-header">
+      <div>
+        <div class="section-title">Order Log</div>
+        <div class="section-subtitle">All campaign orders — creative status, folder confirmation, spend reporting</div>
+      </div>
+    </div>
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterOrders('all', this)">All</button>
+      <button class="filter-btn" onclick="filterOrders('Digital', this)">Digital</button>
+      <button class="filter-btn" onclick="filterOrders('Linear TV', this)">Linear TV</button>
+      <button class="filter-btn" onclick="filterOrders('Cinema', this)">Cinema</button>
+      <input class="search-input" type="text" placeholder="Search company or partner..." oninput="searchOrders(this.value)">
+    </div>
+    <div class="table-wrap">
+      <table id="ordersTable">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Portfolio Co.</th>
+            <th>Media Partner</th>
+            <th>Medium</th>
+            <th>Amount</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Creative Status</th>
+            <th>Client Folder</th>
+            <th>Spend Report</th>
+          </tr>
+        </thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- POST LOG -->
+  <div id="postlog" class="section">
+    <div class="disclaimer">⚠️ All data below is fictional and for demonstration purposes only.</div>
+    <div class="table-header">
+      <div>
+        <div class="section-title">Post Log Tracker</div>
+        <div class="section-subtitle">Weekly delivery tracking — report submission status by campaign</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="postlog-table" id="postlogTable">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Portfolio Co.</th>
+            <th>Partner</th>
+            <th>Medium</th>
+            <th>Frequency</th>
+            <th>Week 1</th>
+            <th>Week 2</th>
+            <th>Week 3</th>
+            <th>Week 4</th>
+            <th>Week 5</th>
+            <th>Week 6</th>
+          </tr>
+        </thead>
+        <tbody id="postlogBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- WEEKLY UPDATES -->
+  <div id="updates" class="section">
+    <div class="disclaimer">⚠️ All data below is fictional and for demonstration purposes only.</div>
+    <div class="table-header">
+      <div>
+        <div class="section-title">Weekly Update Tracker</div>
+        <div class="section-subtitle">Change log — DDN signings, MCO updates, operational changes</div>
+      </div>
+    </div>
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="filterUpdates('all', this)">All</button>
+      <button class="filter-btn" onclick="filterUpdates('DDN Signed', this)">DDN Signed</button>
+      <button class="filter-btn" onclick="filterUpdates('MCO Created', this)">MCO Created</button>
+      <button class="filter-btn" onclick="filterUpdates('Operational', this)">Operational</button>
+      <button class="filter-btn" onclick="filterUpdates('Finance', this)">Finance</button>
+    </div>
+    <div class="table-wrap">
+      <table id="updatesTable">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Week Of</th>
+            <th>Portfolio Co.</th>
+            <th>Partner</th>
+            <th>Type of Change</th>
+            <th>Amount</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody id="updatesBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- QA SYSTEM -->
+  <div id="qa" class="section">
+    <div class="disclaimer">⚠️ This is a live demo of the QA system built at MediaMint. All data is fictional.</div>
+
+    <div class="qa-demo">
+      <div class="qa-header">
+        <div>
+          <div class="qa-header-title">Document QA Checklist</div>
+          <div class="qa-header-sub">Pre-send quality check — financial data integrity + deliverable standards</div>
+        </div>
+        <span class="pill">AI-Augmented System</span>
+      </div>
+      <div class="qa-body">
+        <div class="qa-form-row">
+          <div class="qa-field">
+            <label class="qa-label">Portfolio Company</label>
+            <select class="qa-select" id="qaCompany">
+              <option value="">Select company...</option>
+              <option>Survey Corps Media</option>
+              <option>Straw Hat Ventures</option>
+              <option>Fairy Guild Co.</option>
+              <option>Flame Hashira Group</option>
+              <option>Black Bull Capital</option>
+            </select>
+          </div>
+          <div class="qa-field">
+            <label class="qa-label">Document Type</label>
+            <select class="qa-select" id="qaDocType">
+              <option value="">Select type...</option>
+              <option>Invoice / Billing Document</option>
+              <option>Campaign Performance Report</option>
+              <option>Post Log</option>
+              <option>Executive Deck</option>
+              <option>Order Confirmation</option>
+            </select>
+          </div>
+          <div class="qa-field">
+            <label class="qa-label">MCO Amount (Committed)</label>
+            <input class="qa-input" type="number" id="qaMCO" placeholder="e.g. 250000" oninput="checkAmounts()">
+          </div>
+          <div class="qa-field">
+            <label class="qa-label">Invoice Amount (Actual)</label>
+            <input class="qa-input" type="number" id="qaInvoice" placeholder="e.g. 250000" oninput="checkAmounts()">
+          </div>
+        </div>
+
+        <div id="errorFlag" class="error-flag">
+          <div class="error-flag-icon">🚨</div>
+          <div>
+            <div class="error-flag-text">FIGURE NOT RECONCILED — DO NOT SEND</div>
+            <div class="error-flag-sub" id="errorFlagMsg">Invoice amount does not match committed MCO amount. Reconcile before proceeding.</div>
+          </div>
+        </div>
+
+        <div id="successFlag" class="success-flag">
+          <div class="error-flag-icon">✅</div>
+          <div>
+            <div class="success-flag-text">Amounts reconciled — proceed to checklist</div>
+          </div>
+        </div>
+
+        <div class="qa-checklist" id="qaChecklist">
+          <div class="qa-check-item" onclick="toggleCheck(this)">
+            <div class="qa-checkbox"></div>
+            <div class="qa-check-label">Financial figures match committed order amount</div>
+          </div>
+          <div class="qa-check-item" onclick="toggleCheck(this)">
+            <div class="qa-checkbox"></div>
+            <div class="qa-check-label">Order ID present and correctly formatted</div>
+          </div>
+          <div class="qa-check-item" onclick="toggleCheck(this)">
+            <div class="qa-checkbox"></div>
+            <div class="qa-check-label">Date range matches campaign start/end dates</div>
+          </div>
+          <div class="qa-check-item" onclick="toggleCheck(this)">
+            <div class="qa-checkbox"></div>
+            <div class="qa-check-label">Portfolio company name correct and consistent</div>
+          </div>
+          <div class="qa-check-item" onclick="toggleCheck(this)">
+            <div class="qa-checkbox"></div>
+            <div class="qa-check-label">Media partner details verified</div>
+          </div>
+          <div class="qa-check-item" onclick="toggleCheck(this)">
+            <div class="qa-checkbox"></div>
+            <div class="qa-check-label">Creative status confirmed and updated</div>
+          </div>
+          <div class="qa-check-item" onclick="toggleCheck(this)">
+            <div class="qa-checkbox"></div>
+            <div class="qa-check-label">Client folder updated with latest version</div>
+          </div>
+          <div class="qa-check-item" onclick="toggleCheck(this)">
+            <div class="qa-checkbox"></div>
+            <div class="qa-check-label">Correct stakeholders in CC / distribution list</div>
+          </div>
+        </div>
+
+        <div id="qaResult"></div>
+
+        <button class="qa-submit" onclick="submitQA()">Run QA Check</button>
+        <button class="qa-reset" onclick="resetQA()">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRAINING -->
+  <div id="training" class="section">
+    <div class="disclaimer">⚠️ Trainee profiles below are fictional. Scoring dimensions and framework reflect actual methodology.</div>
+    <div style="margin-bottom:24px;">
+      <div class="section-title">Training &amp; Evaluation Framework</div>
+      <div class="section-subtitle">Structured onboarding and upskilling — scored evaluations across 5 dimensions with TAT tracking</div>
+    </div>
+
+    <div class="training-grid">
+      <div class="trainee-card">
+        <div class="trainee-header">
+          <div>
+            <div class="trainee-name">Trainee A</div>
+            <div class="trainee-role">Operations Associate — Onboarded Jan 2025</div>
+          </div>
+          <span class="readiness-badge readiness-strong">Independent</span>
+        </div>
+        <div class="trainee-body">
+          <div class="dimension-row">
+            <div class="dimension-label">Understanding</div>
+            <div class="dimension-bar-wrap"><div class="dimension-bar" style="width:88%"></div></div>
+            <div class="dimension-score">88</div>
+          </div>
+          <div class="dimension-row">
+            <div class="dimension-label">Accuracy</div>
+            <div class="dimension-bar-wrap"><div class="dimension-bar" style="width:92%"></div></div>
+            <div class="dimension-score">92</div>
+          </div>
+          <div class="dimension-row">
+            <div class="dimension-label">TAT Adherence</div>
+            <div class="dimension-bar-wrap"><div class="dimension-bar" style="width:85%"></div></div>
+            <div class="dimension-score">85</div>
+          </div>
+          <div class="dimension-row">
+            <div class="dimension-label">Execution Quality</div>
+            <div class="dimension-bar-wrap"><div class="dimension-bar" style="width:90%"></div></div>
+            <div class="dimension-score">90</div>
+          </div>
+          <div class="dimension-row">
+            <div class="dimension-label">Overall</div>
+            <div class="dimension-bar-wrap"><div class="dimension-bar" style="width:89%"></div></div>
+            <div class="dimension-score">89</div>
+          </div>
+          <div class="trainee-feedback">
+            <div class="feedback-label">Evaluator Notes</div>
+            <div class="feedback-text">Strong grasp of core workflows from week two. Accuracy on financial documents is above standard. TAT performance improved significantly following structured feedback in week three. Ready for independent execution on standard task types. Recommend expanding to complex account coordination.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="trainee-card">
+        <div class="trainee-header">
+          <div>
+            <div class="trainee-name">Trainee B</div>
+            <div class="trainee-role">Operations Associate — Onboarded Mar 2025</div>
+          </div>
+          <span class="readiness-badge readiness-needs-support">Needs Support</span>
+        </div>
+        <div class="trainee-body">
+          <div class="dimension-row">
+            <div class="dimension-label">Understanding</div>
+            <div class="dimension-bar-wrap"><div class="dimension-bar" style="width:58%"></div></div>
+            <div class="dimension-score">58</div>
+          </div>
+          <div class="dimension-row">
+            <div class="dimension-label">Accuracy</div>
+            <div class="dimension-bar-wrap"><div class="dimension-bar" style="width:52%"></div></div>
+            <div class="dimension-score">52</div>
+          </div>
+          <div class="dimension-row">
+            <div class="dimension-label">TAT Adherence</div>
+            <div class="dimension-bar-wrap"><div class="dimension-bar" style="width:48%"></div></div>
+            <div class="dimension-score">48</div>
+          </div>
+          <div class="dimension-row">
+            <div class="dimension-label">Execution Quality</div>
+            <div class="dimension-bar-wrap"><div class="dimension-bar" style="width:55%"></div></div>
+            <div class="dimension-score">55</div>
+          </div>
+          <div class="dimension-row">
+            <div class="dimension-label">Overall</div>
+            <div class="dimension-bar-wrap"><div class="dimension-bar" style="width:53%"></div></div>
+            <div class="dimension-score">53</div>
+          </div>
+          <div class="trainee-feedback">
+            <div class="feedback-label">Evaluator Notes</div>
+            <div class="feedback-text">Core workflow understanding remains inconsistent after four weeks. Recurring accuracy errors on financial documents — specifically amount reconciliation — require structured remediation before independent execution. TAT performance below standard. Recommend supervised task completion for minimum two additional weeks with daily check-ins before reassessment.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAT Tracking -->
+    <div style="margin-bottom:24px;">
+      <div class="section-title" style="margin-bottom:16px;">Turnaround Time Tracking</div>
+    </div>
+    <div class="table-wrap" style="margin-bottom:32px;">
+      <table>
+        <thead>
+          <tr>
+            <th>Task Type</th>
+            <th>Baseline TAT</th>
+            <th>Trainee A Avg</th>
+            <th>Trainee B Avg</th>
+            <th>Standard</th>
+            <th>Status A</th>
+            <th>Status B</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="company-cell">Post Log Update</td>
+            <td>4 hours</td>
+            <td>3.2 hours</td>
+            <td>6.8 hours</td>
+            <td>&lt; 4 hours</td>
+            <td><span class="status-badge status-delivered">On Standard</span></td>
+            <td><span class="status-badge status-underdelivered">Below Standard</span></td>
+          </tr>
+          <tr>
+            <td class="company-cell">Invoice Reconciliation</td>
+            <td>2 hours</td>
+            <td>1.8 hours</td>
+            <td>4.1 hours</td>
+            <td>&lt; 2 hours</td>
+            <td><span class="status-badge status-delivered">On Standard</span></td>
+            <td><span class="status-badge status-underdelivered">Below Standard</span></td>
+          </tr>
+          <tr>
+            <td class="company-cell">QA Document Check</td>
+            <td>1 hour</td>
+            <td>0.75 hours</td>
+            <td>2.2 hours</td>
+            <td>&lt; 1 hour</td>
+            <td><span class="status-badge status-delivered">On Standard</span></td>
+            <td><span class="status-badge status-underdelivered">Below Standard</span></td>
+          </tr>
+          <tr>
+            <td class="company-cell">Executive Deck Prep</td>
+            <td>3 hours</td>
+            <td>2.5 hours</td>
+            <td>5.0 hours</td>
+            <td>&lt; 3 hours</td>
+            <td><span class="status-badge status-delivered">On Standard</span></td>
+            <td><span class="status-badge status-underdelivered">Below Standard</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- HOW I WORK -->
+  <div id="howIwork" class="section">
+    <div style="margin-bottom:32px;">
+      <div class="section-title">How I Work</div>
+      <div class="section-subtitle">Three operating principles — consistent across every environment</div>
+    </div>
+
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-icon">⚙️</div>
+        <div class="how-title">Operate</div>
+        <div class="how-text">I run complex, multi-stakeholder workflows with precision. Ten accounts. Competing deadlines. Unclear ownership. I create structure where there isn't any, and maintain it under pressure. Things don't fall through because I build the systems that catch them.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">🏗️</div>
+        <div class="how-title">Build</div>
+        <div class="how-text">I create infrastructure before it's asked for. Notion databases. Excel trackers with automated error-flagging. QA frameworks. HTML briefing systems. Process playbooks. Everything built to outlast my presence — documented for the next person from day one.</div>
+      </div>
+      <div class="how-card">
+        <div class="how-icon">👥</div>
+        <div class="how-title">Develop</div>
+        <div class="how-text">I train, evaluate, and give direct feedback. Structured programs with scored evaluations across five dimensions. Clear readiness ratings. Written developmental feedback that doesn't hedge. I document so the next person doesn't start from scratch.</div>
+      </div>
+    </div>
+
+    <div class="philosophy">
+      <div class="philosophy-quote">"I do my best work when there's no playbook."</div>
+    </div>
+
+    <!-- Career Timeline -->
+    <div style="margin-bottom:24px; margin-top:32px;">
+      <div class="section-title" style="margin-bottom:20px;">Career Timeline</div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Role</th>
+            <th>Company</th>
+            <th>Core Skill Built</th>
+            <th>Environment</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2024 – Present</td>
+            <td class="company-cell">Project Manager</td>
+            <td>MediaMint</td>
+            <td>Operations architecture, systems building, people development</td>
+            <td><span class="status-badge status-delivered">High Complexity</span></td>
+          </tr>
+          <tr>
+            <td>2022 – 2024</td>
+            <td class="company-cell">Sr Account Strategist</td>
+            <td>MarketStar India (Regalix)</td>
+            <td>Campaign strategy, client relationship management</td>
+            <td><span class="status-badge status-planning">High Volume</span></td>
+          </tr>
+          <tr>
+            <td>2018 – 2020</td>
+            <td class="company-cell">Customer Service Representative</td>
+            <td>IndiGo (InterGlobe Aviation)</td>
+            <td>Crisis operations, calm under pressure</td>
+            <td><span class="status-badge status-review">High Pressure</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-name">Megha Dhargalkar</div>
+      <div class="footer-title">Media Operations &amp; Campaign Strategy Manager · Hyderabad, IN</div>
+    </div>
+    <a class="footer-link" href="https://www.linkedin.com/in/megha-pdhargalkar/" target="_blank">
+      View LinkedIn Profile →
+    </a>
+  </div>
+  <div class="footer-bar"></div>
+</footer>
+
+<script>
+// ============ DATA ============
+
+const invoiceData = [
+  { id: 'OPS-AOT-001', company: 'Survey Corps Media', partner: 'Titans Broadcasting', medium: 'Digital', mco: 258533, jan: 46023, feb: 87478, mar: 114665, apr: 10366, total: 258532, remaining: 1, status: 'Delivered', remarks: '' },
+  { id: 'OPS-OPC-001', company: 'Straw Hat Ventures', partner: 'Grand Line Network', medium: 'Linear TV', mco: 250000, jan: 194811, feb: 55189, mar: 0, apr: 0, total: 250000, remaining: 0, status: 'Delivered', remarks: '' },
+  { id: 'OPS-FTL-001', company: 'Fairy Guild Co.', partner: 'Magnolia Media', medium: 'Digital', mco: 100000, jan: 100000, feb: 0, mar: 0, apr: 0, total: 100000, remaining: 0, status: 'Delivered', remarks: '' },
+  { id: 'OPS-DSL-001', company: 'Flame Hashira Group', partner: 'Hashira Digital', medium: 'Digital', mco: 100000, jan: 20147, feb: 51610, mar: 28242, apr: 0, total: 100000, remaining: 0, status: 'Delivered', remarks: '' },
+  { id: 'OPS-BCL-001', company: 'Black Bull Capital', partner: 'Clover Kingdom TV', medium: 'Digital', mco: 100000, jan: 0, feb: 32568, mar: 67375, apr: 56, total: 100000, remaining: 0, status: 'Overdelivered', remarks: '56 delivered in Apr' },
+  { id: 'OPS-AOT-002', company: 'Survey Corps Media', partner: 'Corps Cinema', medium: 'Cinema', mco: 200000, jan: 28013, feb: 56895, mar: 115091, apr: 0, total: 200000, remaining: 0, status: 'Delivered', remarks: '' },
+  { id: 'OPS-OPC-002', company: 'Straw Hat Ventures', partner: 'Sora TV', medium: 'Digital', mco: 200000, jan: 48203, feb: 81767, mar: 70028, apr: 0, total: 199999, remaining: 1, status: 'Underdelivered', remarks: '' },
+  { id: 'OPS-FTL-002', company: 'Fairy Guild Co.', partner: 'Kumo Media', medium: 'Digital', mco: 175000, jan: 0, feb: 82634, mar: 92365, apr: 0, total: 175000, remaining: 0, status: 'Delivered', remarks: '' },
+  { id: 'OPS-DSL-002', company: 'Flame Hashira Group', partner: 'Hikari Digital', medium: 'Digital', mco: 100000, jan: 0, feb: 7538, mar: 39288, apr: 35993, total: 82819, remaining: 17181, status: 'Underdelivered', remarks: '' },
+  { id: 'OPS-BCL-002', company: 'Black Bull Capital', partner: 'Umi Digital', medium: 'Digital', mco: 200000, jan: 0, feb: 13045, mar: 74315, apr: 58415, total: 145775, remaining: 54225, status: 'Underdelivered', remarks: '' },
+  { id: 'OPS-AOT-003', company: 'Survey Corps Media', partner: 'Titans Broadcasting', medium: 'Digital', mco: 780000, jan: 0, feb: 0, mar: 0, apr: 67486, total: 67486, remaining: 712514, status: 'Underdelivered', remarks: '' },
+  { id: 'OPS-OPC-003', company: 'Straw Hat Ventures', partner: 'Grand Line Network', medium: 'Linear TV', mco: 272402, jan: 0, feb: 0, mar: 272407, apr: 0, total: 272407, remaining: -5, status: 'Overdelivered', remarks: '' },
+  { id: 'OPS-FTL-003', company: 'Fairy Guild Co.', partner: 'Kumo Media', medium: 'Digital', mco: 50000, jan: 0, feb: 0, mar: 29400, apr: 20600, total: 50000, remaining: 0, status: 'Delivered', remarks: '' },
+  { id: 'OPS-DSL-003', company: 'Flame Hashira Group', partner: 'Magnolia Media', medium: 'Digital', mco: 200000, jan: 0, feb: 0, mar: 0, apr: 18598, total: 18598, remaining: 181402, status: 'Underdelivered', remarks: '' },
+  { id: 'OPS-BCL-003', company: 'Black Bull Capital', partner: 'Hashira Digital', medium: 'Digital', mco: 124700, jan: 0, feb: 0, mar: 0, apr: 7240, total: 7240, remaining: 117460, status: 'Underdelivered', remarks: '' },
+];
+
+const ordersData = [
+  { id: 'OPS-AOT-001', company: 'Survey Corps Media', partner: 'Titans Broadcasting', medium: 'Digital', amount: 258533, start: '01 Jan 2026', end: '31 Mar 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Y' },
+  { id: 'OPS-OPC-001', company: 'Straw Hat Ventures', partner: 'Grand Line Network', medium: 'Linear TV', amount: 250000, start: '01 Jan 2026', end: '22 Feb 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Y' },
+  { id: 'OPS-FTL-001', company: 'Fairy Guild Co.', partner: 'Magnolia Media', medium: 'Digital', amount: 100000, start: '02 Jan 2026', end: '18 Feb 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Y' },
+  { id: 'OPS-DSL-001', company: 'Flame Hashira Group', partner: 'Titans Broadcasting', medium: 'Digital', amount: 100000, start: '17 Feb 2026', end: '31 Mar 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Y' },
+  { id: 'OPS-BCL-001', company: 'Black Bull Capital', partner: 'Clover Kingdom TV', medium: 'Digital', amount: 100000, start: '02 Mar 2026', end: '31 Mar 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Y' },
+  { id: 'OPS-AOT-002', company: 'Survey Corps Media', partner: 'Corps Cinema', medium: 'Cinema', amount: 200000, start: '03 Feb 2026', end: '31 Mar 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Y' },
+  { id: 'OPS-OPC-002', company: 'Straw Hat Ventures', partner: 'Sora TV', medium: 'Digital', amount: 200000, start: '07 Feb 2026', end: '31 Mar 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Y' },
+  { id: 'OPS-FTL-002', company: 'Fairy Guild Co.', partner: 'Kumo Media', medium: 'Digital', amount: 175000, start: '28 Feb 2026', end: '19 Apr 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Y' },
+  { id: 'OPS-DSL-002', company: 'Flame Hashira Group', partner: 'Magnolia Media', medium: 'Digital', amount: 100000, start: '16 Mar 2026', end: '07 Jun 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Y' },
+  { id: 'OPS-BCL-002', company: 'Black Bull Capital', partner: 'Umi Digital', medium: 'Digital', amount: 200000, start: '10 Mar 2026', end: '07 Jun 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Y' },
+  { id: 'OPS-AOT-003', company: 'Survey Corps Media', partner: 'Titans Broadcasting', medium: 'Digital', amount: 780000, start: '02 Apr 2026', end: '31 Dec 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Pending' },
+  { id: 'OPS-OPC-003', company: 'Straw Hat Ventures', partner: 'Grand Line Network', medium: 'Linear TV', amount: 272402, start: '22 Mar 2026', end: '19 Apr 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Y' },
+  { id: 'OPS-FTL-003', company: 'Fairy Guild Co.', partner: 'Kumo Media', medium: 'Digital', amount: 50000, start: '22 Mar 2026', end: '21 May 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Y' },
+  { id: 'OPS-DSL-003', company: 'Flame Hashira Group', partner: 'Hashira Digital', medium: 'Digital', amount: 200000, start: '30 Apr 2026', end: '07 Jun 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Pending' },
+  { id: 'OPS-BCL-003', company: 'Black Bull Capital', partner: 'Hashira Digital', medium: 'Digital', amount: 124700, start: '28 Apr 2026', end: '01 Jun 2026', creative: 'Confirmed', folder: '✓ Drive', spend: 'Pending' },
+];
+
+const postlogData = [
+  { id: 'OPS-AOT-001', company: 'Survey Corps Media', partner: 'Titans Broadcasting', medium: 'Digital', freq: 'Monthly', weeks: ['Submitted', 'Submitted', 'Submitted', 'Submitted', 'Submitted', 'N/A'] },
+  { id: 'OPS-OPC-001', company: 'Straw Hat Ventures', partner: 'Grand Line Network', medium: 'Linear TV', freq: 'Weekly Wed', weeks: ['Submitted', 'Submitted', 'Submitted', 'Submitted', 'N/A', 'N/A'] },
+  { id: 'OPS-FTL-001', company: 'Fairy Guild Co.', partner: 'Magnolia Media', medium: 'Digital', freq: 'Weekly Mon', weeks: ['Submitted', 'Submitted', 'Submitted', 'N/A', 'N/A', 'N/A'] },
+  { id: 'OPS-DSL-001', company: 'Flame Hashira Group', partner: 'Titans Broadcasting', medium: 'Digital', freq: 'Weekly Mon', weeks: ['Submitted', 'Submitted', 'Submitted', 'Submitted', 'Submitted', 'Pending'] },
+  { id: 'OPS-BCL-001', company: 'Black Bull Capital', partner: 'Clover Kingdom TV', medium: 'Digital', freq: 'Weekly Wed', weeks: ['Submitted', 'Submitted', 'Submitted', 'Submitted', 'Pending', 'N/A'] },
+  { id: 'OPS-AOT-002', company: 'Survey Corps Media', partner: 'Corps Cinema', medium: 'Cinema', freq: 'Post Campaign', weeks: ['Submitted', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'] },
+  { id: 'OPS-OPC-002', company: 'Straw Hat Ventures', partner: 'Sora TV', medium: 'Digital', freq: 'Weekly Mon', weeks: ['Submitted', 'Submitted', 'Submitted', 'Submitted', 'Submitted', 'Submitted'] },
+  { id: 'OPS-FTL-002', company: 'Fairy Guild Co.', partner: 'Kumo Media', medium: 'Digital', freq: 'Weekly Mon', weeks: ['Submitted', 'Submitted', 'Submitted', 'Submitted', 'Submitted', 'Pending'] },
+  { id: 'OPS-DSL-002', company: 'Flame Hashira Group', partner: 'Magnolia Media', medium: 'Digital', freq: 'Weekly Mon', weeks: ['Submitted', 'Submitted', 'Submitted', 'Submitted', 'Pending', 'N/A'] },
+  { id: 'OPS-BCL-002', company: 'Black Bull Capital', partner: 'Umi Digital', medium: 'Digital', freq: 'Weekly Wed', weeks: ['Submitted', 'Submitted', 'Submitted', 'Submitted', 'Submitted', 'Pending'] },
+];
+
+const updatesData = [
+  { status: 'Used', week: 'Week of Mar 24', company: 'Survey Corps Media', partner: 'Titans Broadcasting', type: 'DDN Signed', amount: 270000, notes: 'Q2 extension confirmed' },
+  { status: 'Used', week: 'Week of Mar 24', company: '', partner: '', type: 'Operational', amount: 0, notes: 'FAQ document updated for team' },
+  { status: 'Used', week: 'Week of Mar 31', company: 'Straw Hat Ventures', partner: 'Grand Line Network', type: 'MCO Created', amount: 250000, notes: 'MCO aligned to DDN' },
+  { status: 'Used', week: 'Week of Apr 7', company: 'Fairy Guild Co.', partner: 'Magnolia Media', type: 'DDN Signed', amount: 175000, notes: 'Q2 digital confirmed' },
+  { status: 'Used', week: 'Week of Apr 7', company: 'Flame Hashira Group', partner: 'Hashira Digital', type: 'Finance', amount: 6800, notes: 'Discrepancy flagged — reconciled before send' },
+  { status: 'Used', week: 'Week of Apr 14', company: 'Black Bull Capital', partner: 'Clover Kingdom TV', type: 'MCO Created', amount: 100000, notes: 'New order processed same day as DDN' },
+  { status: 'Used', week: 'Week of Apr 14', company: '', partner: '', type: 'Operational', amount: 0, notes: 'QA system updated — new doc type added' },
+  { status: 'Used', week: 'Week of Apr 21', company: 'Survey Corps Media', partner: 'Corps Cinema', type: 'DDN Signed', amount: 780000, notes: 'Q2–Q4 large order signed' },
+  { status: 'Used', week: 'Week of Apr 28', company: 'Straw Hat Ventures', partner: 'Sora TV', type: 'Finance', amount: 0, notes: 'Post-log reconciliation completed for Q1' },
+  { status: 'Pending', week: 'Week of May 5', company: 'Flame Hashira Group', partner: 'Grand Line Network', type: 'DDN Signed', amount: 200000, notes: 'Awaiting countersignature' },
+  { status: 'Pending', week: 'Week of May 5', company: 'Black Bull Capital', partner: 'Hikari Digital', type: 'MCO Created', amount: 124700, notes: 'Pending DDN return' },
+];
+
+// ============ RENDER FUNCTIONS ============
+
+function fmt(n) {
+  if (!n && n !== 0) return '—';
+  if (n === 0) return '$0';
+  return '$' + Number(n).toLocaleString();
+}
+
+function statusBadge(s) {
+  const map = {
+    'Delivered': 'status-delivered',
+    'Underdelivered': 'status-underdelivered',
+    'Overdelivered': 'status-overdelivered',
+    'Void': 'status-void',
+    'Active': 'status-active',
+    'In Review': 'status-review',
+    'Planning': 'status-planning',
+    'At Risk': 'status-risk',
+    'Used': 'status-delivered',
+    'Pending': 'status-review',
+  };
+  return `<span class="status-badge ${map[s] || ''}">${s}</span>`;
+}
+
+function mediumBadge(m) {
+  const map = { 'Digital': 'medium-digital', 'Linear TV': 'medium-linear', 'Cinema': 'medium-cinema' };
+  return `<span class="medium-badge ${map[m] || ''}">${m}</span>`;
+}
+
+function renderInvoice(data) {
+  const tbody = document.getElementById('invoiceBody');
+  tbody.innerHTML = data.map(r => `
+    <tr data-status="${r.status}" data-search="${r.company.toLowerCase()} ${r.partner.toLowerCase()}">
+      <td class="id-cell">${r.id}</td>
+      <td class="company-cell">${r.company}</td>
+      <td>${r.partner}</td>
+      <td>${mediumBadge(r.medium)}</td>
+      <td class="amount-cell">${fmt(r.mco)}</td>
+      <td>${r.jan ? fmt(r.jan) : '—'}</td>
+      <td>${r.feb ? fmt(r.feb) : '—'}</td>
+      <td>${r.mar ? fmt(r.mar) : '—'}</td>
+      <td>${r.apr ? fmt(r.apr) : '—'}</td>
+      <td class="amount-cell">${fmt(r.total)}</td>
+      <td class="${r.remaining < 0 ? 'flag-cell' : ''}">${fmt(r.remaining)}</td>
+      <td>${statusBadge(r.status)}</td>
+      <td class="flag-cell">${r.remarks || ''}</td>
+    </tr>
+  `).join('');
+}
+
+function renderOrders(data) {
+  const tbody = document.getElementById('ordersBody');
+  tbody.innerHTML = data.map(r => `
+    <tr data-medium="${r.medium}" data-search="${r.company.toLowerCase()} ${r.partner.toLowerCase()}">
+      <td class="id-cell">${r.id}</td>
+      <td class="company-cell">${r.company}</td>
+      <td>${r.partner}</td>
+      <td>${mediumBadge(r.medium)}</td>
+      <td class="amount-cell">${fmt(r.amount)}</td>
+      <td>${r.start}</td>
+      <td>${r.end}</td>
+      <td><span class="status-badge status-confirmed">${r.creative}</span></td>
+      <td style="color:var(--teal)">${r.folder}</td>
+      <td>${r.spend === 'Y' ? '<span class="status-badge status-delivered">Y</span>' : '<span class="status-badge status-review">Pending</span>'}</td>
+    </tr>
+  `).join('');
+}
+
+function renderPostlog(data) {
+  const tbody = document.getElementById('postlogBody');
+  tbody.innerHTML = data.map(r => `
+    <tr>
+      <td class="id-cell">${r.id}</td>
+      <td class="company-cell">${r.company}</td>
+      <td>${r.partner}</td>
+      <td>${mediumBadge(r.medium)}</td>
+      <td><span class="pill">${r.freq}</span></td>
+      ${r.weeks.map(w => `<td>${
+        w === 'Submitted' ? '<span class="postlog-submitted">✓ Submitted</span>' :
+        w === 'Pending' ? '<span class="postlog-pending">Pending</span>' :
+        '<span class="postlog-na">N/A</span>'
+      }</td>`).join('')}
+    </tr>
+  `).join('');
+}
+
+function renderUpdates(data) {
+  const tbody = document.getElementById('updatesBody');
+  tbody.innerHTML = data.map(r => `
+    <tr data-type="${r.type}">
+      <td>${statusBadge(r.status)}</td>
+      <td>${r.week}</td>
+      <td class="company-cell">${r.company || '—'}</td>
+      <td>${r.partner || '—'}</td>
+      <td><span class="update-type ${
+        r.type === 'DDN Signed' ? 'update-ddn' :
+        r.type === 'MCO Created' ? 'update-mco' :
+        r.type === 'Finance' ? 'update-finance' :
+        'update-operational'
+      }">${r.type}</span></td>
+      <td class="amount-cell">${r.amount ? fmt(r.amount) : '—'}</td>
+      <td style="font-size:12px; color:var(--grey)">${r.notes}</td>
+    </tr>
+  `).join('');
+}
+
+// ============ FILTER FUNCTIONS ============
+
+function filterInvoice(status, btn) {
+  document.querySelectorAll('#invoice .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const rows = document.querySelectorAll('#invoiceBody tr');
+  rows.forEach(r => {
+    r.style.display = (status === 'all' || r.dataset.status === status) ? '' : 'none';
+  });
+}
+
+function searchInvoice(val) {
+  const rows = document.querySelectorAll('#invoiceBody tr');
+  rows.forEach(r => {
+    r.style.display = r.dataset.search.includes(val.toLowerCase()) ? '' : 'none';
+  });
+}
+
+function filterOrders(medium, btn) {
+  document.querySelectorAll('#orders .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const rows = document.querySelectorAll('#ordersBody tr');
+  rows.forEach(r => {
+    r.style.display = (medium === 'all' || r.dataset.medium === medium) ? '' : 'none';
+  });
+}
+
+function searchOrders(val) {
+  const rows = document.querySelectorAll('#ordersBody tr');
+  rows.forEach(r => {
+    r.style.display = r.dataset.search.includes(val.toLowerCase()) ? '' : 'none';
+  });
+}
+
+function filterUpdates(type, btn) {
+  document.querySelectorAll('#updates .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const rows = document.querySelectorAll('#updatesBody tr');
+  rows.forEach(r => {
+    r.style.display = (type === 'all' || r.dataset.type === type) ? '' : 'none';
+  });
+}
+
+// ============ NAV ============
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ============ QA SYSTEM ============
+
+function checkAmounts() {
+  const mco = parseFloat(document.getElementById('qaMCO').value);
+  const inv = parseFloat(document.getElementById('qaInvoice').value);
+  const errFlag = document.getElementById('errorFlag');
+  const succFlag = document.getElementById('successFlag');
+  const mcoInput = document.getElementById('qaMCO');
+  const invInput = document.getElementById('qaInvoice');
+
+  if (!mco || !inv) {
+    errFlag.classList.remove('visible');
+    succFlag.classList.remove('visible');
+    mcoInput.classList.remove('error');
+    invInput.classList.remove('error');
+    return;
+  }
+
+  const diff = Math.abs(mco - inv);
+  if (diff > 1) {
+    errFlag.classList.add('visible');
+    succFlag.classList.remove('visible');
+    document.getElementById('errorFlagMsg').textContent =
+      `Discrepancy of ${fmt(diff)} detected. Invoice amount does not match committed MCO amount. Reconcile before proceeding.`;
+    invInput.classList.add('error');
+  } else {
+    errFlag.classList.remove('visible');
+    succFlag.classList.add('visible');
+    invInput.classList.remove('error');
+  }
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+}
+
+function submitQA() {
+  const items = document.querySelectorAll('.qa-check-item');
+  const checked = document.querySelectorAll('.qa-check-item.checked').length;
+  const total = items.length;
+  const mco = document.getElementById('qaMCO').value;
+  const inv = document.getElementById('qaInvoice').value;
+  const company = document.getElementById('qaCompany').value;
+  const docType = document.getElementById('qaDocType').value;
+  const result = document.getElementById('qaResult');
+
+  const errFlag = document.getElementById('errorFlag');
+  if (errFlag.classList.contains('visible')) {
+    result.innerHTML = `<div class="error-flag visible" style="margin-bottom:16px;">
+      <div class="error-flag-icon">🚨</div>
+      <div><div class="error-flag-text">QA FAILED — Financial figures not reconciled</div>
+      <div class="error-flag-sub">Resolve the amount discrepancy before this document can be cleared.</div></div>
+    </div>`;
+    return;
+  }
+
+  if (!company || !docType) {
+    result.innerHTML = `<div class="error-flag visible" style="margin-bottom:16px;"><div class="error-flag-icon">⚠️</div><div><div class="error-flag-text">Please complete all required fields before running QA.</div></div></div>`;
+    return;
+  }
+
+  if (checked === total) {
+    result.innerHTML = `<div class="success-flag visible" style="margin-bottom:16px;">
+      <div class="error-flag-icon">✅</div>
+      <div><div class="success-flag-text">QA PASSED — All ${total} checks complete. Document cleared for send.</div></div>
+    </div>`;
+  } else {
+    result.innerHTML = `<div class="error-flag visible" style="margin-bottom:16px;">
+      <div class="error-flag-icon">⚠️</div>
+      <div><div class="error-flag-text">QA INCOMPLETE — ${total - checked} of ${total} checks remaining</div>
+      <div class="error-flag-sub">Complete all checklist items before clearing this document.</div></div>
+    </div>`;
+  }
+}
+
+function resetQA() {
+  document.getElementById('qaCompany').value = '';
+  document.getElementById('qaDocType').value = '';
+  document.getElementById('qaMCO').value = '';
+  document.getElementById('qaInvoice').value = '';
+  document.getElementById('errorFlag').classList.remove('visible');
+  document.getElementById('successFlag').classList.remove('visible');
+  document.getElementById('qaResult').innerHTML = '';
+  document.getElementById('qaMCO').classList.remove('error');
+  document.getElementById('qaInvoice').classList.remove('error');
+  document.querySelectorAll('.qa-check-item').forEach(el => el.classList.remove('checked'));
+}
+
+// ============ INIT ============
+renderInvoice(invoiceData);
+renderOrders(ordersData);
+renderPostlog(postlogData);
+renderUpdates(updatesData);
+</script>
+</body>
+</html>
